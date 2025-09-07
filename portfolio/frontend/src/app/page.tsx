@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
 import { useTheme } from './contexts/ThemeContext';
 
 export default function Home() {
@@ -14,8 +13,6 @@ export default function Home() {
   const [chatMessages, setChatMessages] = useState<{sender: string, text: string}[]>([]);
   const [typedText, setTypedText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
-
-  const roles = ["Data Engineer", "AI Scientist", "Product Builder", "Startup Enthusiast"];
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
 
   // Smooth scroll function
@@ -36,10 +33,10 @@ export default function Home() {
       // Simulate AI response
       setTimeout(() => {
         const responses = [
-          "Thanks for your message! I'd love to connect and discuss opportunities.",
-          "That's a great question! Feel free to check out my projects or contact me directly.",
-          "I'm always interested in new collaborations and product development opportunities!",
-          "Let's discuss how we can work together on innovative AI solutions.",
+          "Thanks for your message! I&apos;d love to connect and discuss opportunities.",
+          "That&apos;s a great question! Feel free to check out my projects or contact me directly.",
+          "I&apos;m always interested in new collaborations and product development opportunities!",
+          "Let&apos;s discuss how we can work together on innovative AI solutions.",
           "I appreciate your interest! You can reach me through the contact form below."
         ];
         const randomResponse = responses[Math.floor(Math.random() * responses.length)];
@@ -70,6 +67,7 @@ export default function Home() {
 
   // Typing animation effect
   useEffect(() => {
+    const roles = ["Data Engineer", "AI Scientist", "Product Builder", "Startup Enthusiast"];
     const currentRole = roles[currentRoleIndex];
     let currentIndex = 0;
     let isDeleting = false;
@@ -234,7 +232,7 @@ export default function Home() {
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-              Hi, I'm{' '}
+              Hi, I&apos;m{' '}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Srinivas Muralidharan
               </span>
@@ -556,7 +554,7 @@ export default function Home() {
           <div className="flex-1 p-4 overflow-y-auto bg-gray-50 dark:bg-gray-700">
             <div className="space-y-3">
               <div className="bg-blue-500 text-white p-3 rounded-lg rounded-tl-none max-w-[80%]">
-                <p className="text-sm">Hi! I'm Srinivas. Thanks for visiting my portfolio! 👋</p>
+                <p className="text-sm">Hi! I&apos;m Srinivas. Thanks for visiting my portfolio! 👋</p>
               </div>
               <div className="bg-blue-500 text-white p-3 rounded-lg rounded-tl-none max-w-[80%]">
                 <p className="text-sm">Feel free to ask me about my experience, projects, or potential collaborations!</p>
@@ -639,7 +637,7 @@ export default function Home() {
                     <path fillRule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <span className="text-sm text-gray-700 dark:text-gray-300">Let's Talk</span>
+                <span className="text-sm text-gray-700 dark:text-gray-300">Let&apos;s Talk</span>
               </button>
             </div>
           </div>
