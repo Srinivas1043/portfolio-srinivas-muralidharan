@@ -1,26 +1,28 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: "Srinivas Muralidharan - Data Engineer & AI Scientist",
-  description: "Passionate Data Engineer and AI Scientist specializing in transforming complex data into actionable insights. Expert in Azure, Databricks, PySpark, and machine learning.",
-  keywords: "Data Engineer, AI Scientist, Machine Learning, Azure, Databricks, PySpark, NLP, Knowledge Graphs",
+  title: "Srinivas Muralidharan - Data Specialist & Architect",
+  description: "Senior Data Specialist and Architect transforming complex data into scalable solutions and actionable insights.",
+  keywords: "Data Specialist, Data Architect, Data Engineering, AI, Strategy",
   authors: [{ name: "Srinivas Muralidharan" }],
   openGraph: {
-    title: "Srinivas Muralidharan - Data Engineer & AI Scientist",
-    description: "Passionate Data Engineer and AI Scientist specializing in transforming complex data into actionable insights.",
+    title: "Srinivas Muralidharan - Data Specialist & Architect",
+    description: "Senior Data Specialist and Architect transforming complex data into scalable solutions and actionable insights.",
     type: "website",
   },
 };
@@ -33,7 +35,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
+        className={`${playfair.variable} ${inter.variable} font-sans antialiased text-slate-800 bg-white dark:bg-slate-900 dark:text-slate-100`}
       >
         <ThemeProvider>
           {children}

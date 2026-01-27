@@ -7,13 +7,6 @@ export default function Home() {
   const { theme, toggleTheme } = useTheme();
   const [activeSection, setActiveSection] = useState('hero');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  const [isQuickLinksOpen, setIsQuickLinksOpen] = useState(false);
-  const [chatInput, setChatInput] = useState('');
-  const [chatMessages, setChatMessages] = useState<{sender: string, text: string}[]>([]);
-  const [typedText, setTypedText] = useState('');
-  const [showCursor, setShowCursor] = useState(true);
-  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
 
   // Smooth scroll function
   const scrollToSection = (sectionId: string) => {
@@ -24,30 +17,9 @@ export default function Home() {
     }
   };
 
-  // Chat message handler
-  const handleSendMessage = () => {
-    if (chatInput.trim()) {
-      setChatMessages([...chatMessages, { sender: 'user', text: chatInput }]);
-      setChatInput('');
-      
-      // Simulate AI response
-      setTimeout(() => {
-        const responses = [
-          "Thanks for your message! I&apos;d love to connect and discuss opportunities.",
-          "That&apos;s a great question! Feel free to check out my projects or contact me directly.",
-          "I&apos;m always interested in new collaborations and product development opportunities!",
-          "Let&apos;s discuss how we can work together on innovative AI solutions.",
-          "I appreciate your interest! You can reach me through the contact form below."
-        ];
-        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-        setChatMessages(prev => [...prev, { sender: 'bot', text: randomResponse }]);
-      }, 1000);
-    }
-  };
-
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'about', 'experience', 'projects', 'contact'];
+      const sections = ['hero', 'about', 'experience', 'projects', 'certifications', 'contact'];
       const scrollPosition = window.scrollY + 100;
 
       sections.forEach(section => {
@@ -65,76 +37,104 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Typing animation effect
-  useEffect(() => {
-    const roles = ["Data Engineer", "AI Scientist", "Product Builder", "Startup Enthusiast"];
-    const currentRole = roles[currentRoleIndex];
-    let currentIndex = 0;
-    let isDeleting = false;
-    
-    const typeEffect = () => {
-      if (!isDeleting) {
-        setTypedText(currentRole.substring(0, currentIndex + 1));
-        currentIndex++;
-        
-        if (currentIndex === currentRole.length) {
-          setTimeout(() => {
-            isDeleting = true;
-          }, 2000);
-        }
-      } else {
-        setTypedText(currentRole.substring(0, currentIndex - 1));
-        currentIndex--;
-        
-        if (currentIndex === 0) {
-          isDeleting = false;
-          setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
-        }
-      }
-    };
-
-    const interval = setInterval(typeEffect, isDeleting ? 50 : 100);
-    return () => clearInterval(interval);
-  }, [currentRoleIndex]);
-
-  // Cursor blinking effect
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, 500);
-    return () => clearInterval(interval);
-  }, []);
+  const certifications = [
+    {
+      title: "Certified Data Engineer Associate",
+      issuer: "Databricks",
+      date: "Oct 2025",
+      skills: ["Azure Databricks", "Apache Spark", "Data Streaming"],
+      id: "162449464"
+    },
+    {
+      title: "Azure AI Engineer Associate",
+      issuer: "Microsoft",
+      date: "Sep 2022",
+      id: "I400-1964"
+    },
+    {
+      title: "Professional Cloud DevOps Engineer",
+      issuer: "Google Cloud",
+      date: "In Progress"
+    },
+    {
+      title: "LLMOps Basics",
+      issuer: "DeepLearning.AI",
+      date: "Aug 2025",
+      skills: ["LLMOps"]
+    },
+    {
+      title: "Cypher Fundamentals",
+      issuer: "Neo4j",
+      date: "Mar 2024",
+      id: "80a5a38a"
+    },
+    {
+      title: "Graph Data Modeling",
+      issuer: "Neo4j",
+      date: "Mar 2024",
+      id: "8e96b761"
+    },
+    {
+      title: "Neo4j Fundamentals",
+      issuer: "Neo4j",
+      date: "Mar 2024",
+      id: "e0bb5598"
+    },
+    {
+      title: "Generative AI Fundamentals Accreditation",
+      issuer: "Databricks",
+      date: "Oct 2023",
+      id: "E-1Q55ZV",
+      skills: ["AI"]
+    },
+    {
+      title: "Azure Data Engineer Associate",
+      issuer: "Microsoft",
+      date: "Mar 2022",
+      id: "990963600"
+    },
+    {
+      title: "Azure Cosmos DB Developer Prioritized",
+      issuer: "Microsoft",
+      date: "Sep 2022"
+    },
+    {
+      title: "LangChain for LLM Application Development",
+      issuer: "DeepLearning.AI",
+      skills: ["LangChain", "LLMs"]
+    }
+  ];
 
   const projects = [
     {
       title: "AI-Powered Healthcare Startup",
-      description: "Currently developing an AI-driven healthcare analytics platform for early disease detection",
+      description: "Developing an AI-driven healthcare analytics platform for early disease detection.",
       tech: ["AI/ML", "Healthcare Tech", "Product Strategy"],
       impact: "In Development"
     },
     {
       title: "Referral Revenue Optimization",
-      description: "AI-powered referral system that increased revenue by 32%",
+      description: "Implemented an AI-powered referral system that increased revenue by 32%.",
       tech: ["Python", "Machine Learning", "Azure"],
-      impact: "32% increase"
+      impact: "32% Revenue Increase"
     },
     {
-      title: "Consent Management Platform", 
-      description: "Advanced consent management with 45% improved accuracy",
+      title: "Consent Management Platform",
+      description: "Engineered an advanced consent management system improving accuracy by 45%.",
       tech: ["Python", "NLP", "Databricks"],
-      impact: "45% improvement"
+      impact: "45% Accuracy Improvement"
     },
     {
       title: "Multi-Country NLP Classifier",
-      description: "NLP classifiers achieving 90% accuracy across 8+ countries",
+      description: "Deployed NLP classifiers achieving 90% accuracy across 8+ international markets.",
       tech: ["Python", "Hugging Face", "MLOps"],
-      impact: "90% accuracy"
+      impact: "90% Accuracy"
     },
     {
       title: "Google Maps Migration",
-      description: "Optimized data pipeline reducing runtime from 18h to 7h",
+      description: "Optimized data pipeline performance, reducing runtime from 18h to 7h.",
       tech: ["Python", "Apache Spark", "Azure"],
-      impact: "61% faster"
+      impact: "61% Faster Runtime"
     }
   ];
 
@@ -143,202 +143,185 @@ export default function Home() {
       title: "AI Scientist & Senior Data Engineer",
       company: "AniCura",
       period: "2024 - Present",
-      description: "Leading AI initiatives and advanced data engineering projects in healthcare."
+      description: "Leading AI initiatives and advanced data engineering projects in healthcare. designing scalable architectures for complex medical data."
     },
     {
       title: "Data Engineer",
-      company: "FrieslandCampina", 
+      company: "FrieslandCampina",
       period: "2023 - 2024",
-      description: "Developed scalable data pipelines and ML solutions for consumer analytics."
-    },
-    {
-      title: "Data Engineer",
-      company: "Amazon",
-      period: "2022 - 2023", 
-      description: "Built large-scale data processing systems for e-commerce optimization."
+      description: "Developed scalable data pipelines and ML solutions for consumer analytics, driving data-informed decision making."
     },
     {
       title: "Data Engineer",
       company: "Macaw",
       period: "2021 - 2022",
-      description: "Specialized in cloud data architectures and enterprise analytics solutions."
+      description: "Specialized in cloud data architectures and enterprise analytics solutions for diverse clients."
     }
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-40 border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-lg">SM</span>
-              </div>
-              <span className="text-xl font-bold text-gray-900 dark:text-white">Srinivas</span>
-            </div>
-            
-            <div className="hidden md:flex space-x-8">
-              {['About', 'Experience', 'Projects', 'Contact'].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => scrollToSection(item.toLowerCase())}
-                  className={`text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors ${
-                    activeSection === item.toLowerCase() ? 'text-blue-600 dark:text-blue-400' : ''
-                  }`}
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
+    <div className="min-h-screen bg-transparent transition-colors duration-500 font-sans selection:bg-blue-500/30 selection:text-blue-900 dark:selection:text-blue-200">
 
+      {/* Background Grid Pattern */}
+      <div className="fixed inset-0 z-[-1] bg-grid-pattern opacity-60 pointer-events-none" />
+
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 glass-card backdrop-blur-md border-b border-white/20 dark:border-white/10 transition-all duration-300">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div
+            onClick={() => scrollToSection('hero')}
+            className="text-2xl font-serif font-bold tracking-tight cursor-pointer hover:opacity-80 transition-opacity bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300"
+          >
+            SM.
+          </div>
+
+          <div className="hidden md:flex items-center space-x-12">
+            {['About', 'Experience', 'Projects', 'Certifications', 'Contact'].map((item) => (
+              <button
+                key={item}
+                onClick={() => scrollToSection(item.toLowerCase())}
+                className={`text-sm font-medium tracking-wide uppercase transition-all duration-300 tech-border ${activeSection === item.toLowerCase()
+                  ? 'text-blue-600 dark:text-blue-400'
+                  : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200'
+                  }`}
+              >
+                {item}
+              </button>
+            ))}
             <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden text-gray-600"
+              onClick={toggleTheme}
+              className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+              aria-label="Toggle theme"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
+              {theme === 'dark' ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+              )}
             </button>
           </div>
+
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden p-2 text-slate-800 dark:text-slate-200"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
       </nav>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-white md:hidden">
-          <div className="pt-20 px-4">
-            {['About', 'Experience', 'Projects', 'Contact'].map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollToSection(item.toLowerCase())}
-                className="block w-full text-left py-4 text-gray-600 font-medium border-b border-gray-100"
-              >
-                {item}
-              </button>
-            ))}
-          </div>
+        <div className="fixed inset-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl md:hidden flex flex-col items-center justify-center space-y-8 animate-fade-in">
+          {['About', 'Experience', 'Projects', 'Certifications', 'Contact'].map((item) => (
+            <button
+              key={item}
+              onClick={() => scrollToSection(item.toLowerCase())}
+              className="text-2xl font-serif font-medium text-slate-900 dark:text-slate-100"
+            >
+              {item}
+            </button>
+          ))}
+          <button
+            onClick={() => { toggleTheme(); setIsMenuOpen(false); }}
+            className="mt-8 px-6 py-2 border border-slate-200 dark:border-slate-700 rounded-full"
+          >
+            Switch Theme
+          </button>
         </div>
       )}
 
       {/* Hero Section */}
-      <section id="hero" className="pt-16 min-h-screen flex items-center">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="mb-8">
-              <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
-                <span className="text-white text-4xl font-bold">SM</span>
-              </div>
+      <section id="hero" className="min-h-screen flex items-center pt-20 relative overflow-hidden">
+        {/* Abstract Background Element */}
+        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-gradient-to-b from-blue-200/20 to-purple-200/20 dark:from-blue-900/20 dark:to-purple-900/20 rounded-full blur-[100px] -z-10" />
+
+        <div className="max-w-7xl mx-auto px-6 w-full">
+          <div className="max-w-4xl animate-fade-in">
+            <div className="inline-flex items-center space-x-2 bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-full mb-8 border border-blue-100 dark:border-blue-800">
+              <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300">
+                Available for Innovation
+              </span>
             </div>
-            
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-              Hi, I&apos;m{' '}
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Srinivas Muralidharan
+
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-slate-900 dark:text-white mb-8 tracking-tight leading-[1.1]">
+              Engineering Data <br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+                For Society.
               </span>
             </h1>
-            
-            <div className="text-xl sm:text-2xl text-gray-600 mb-4 h-8">
-              <span className="gradient-text font-semibold">
-                {typedText}
-                <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity`}>|</span>
-              </span>
-            </div>
-            
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Turning complex data into actionable insights and innovative products. Passionate about building 
-              AI-driven solutions, developing startups, and creating scalable data systems with 5+ years of experience across leading companies.
+
+            <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 font-light leading-relaxed mb-12 max-w-2xl">
+              I am a <span className="font-semibold text-slate-900 dark:text-white">Data Specialist and Architect</span> deeply focused on AI and Tech Development. My passion lies in solving complex problems to create meaningful social impact.
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+
+            <div className="flex flex-col sm:flex-row gap-6">
               <button
                 onClick={() => scrollToSection('projects')}
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+                className="group px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold rounded-lg hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center sm:justify-start"
               >
-                View My Work
+                View Selected Work
+                <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </button>
               <button
-                onClick={() => scrollToSection('contact')}
-                className="px-8 py-4 border-2 border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-600 hover:text-white transition-all duration-200"
+                onClick={() => scrollToSection('about')}
+                className="px-8 py-4 border border-slate-200 dark:border-slate-700 rounded-lg font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
               >
-                Get In Touch
+                More About Me
               </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">5+</div>
-              <div className="text-gray-600 dark:text-gray-300">Years Experience</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">15+</div>
-              <div className="text-gray-600 dark:text-gray-300">Projects Completed</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-bold text-green-600 dark:text-green-400 mb-2">3</div>
-              <div className="text-gray-600 dark:text-gray-300">Companies Transformed</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-bold text-orange-600 dark:text-orange-400 mb-2">95%</div>
-              <div className="text-gray-600 dark:text-gray-300">Client Satisfaction</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-white dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">About Me</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Experienced Data Engineer and AI Scientist with expertise in transforming complex data 
-              into actionable insights and innovative products across healthcare, finance, and consumer goods industries.
-              Passionate about product development and building scalable startup solutions.
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Professional Summary</h3>
-              <p className="text-gray-600 leading-relaxed mb-6">
-                With extensive experience in Data Engineering, AI, NLP, and Knowledge Graphs, 
-                I've worked with leading companies including AniCura, FrieslandCampina, Amazon, 
-                and Macaw. I hold an MSc in AI from Vrije Universiteit Amsterdam and am passionate about 
-                building innovative products and developing startup solutions that solve real-world problems.
-              </p>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <div className="text-2xl font-bold text-blue-600">5+</div>
-                  <div className="text-gray-600">Years Experience</div>
+      <section id="about" className="py-32 relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid md:grid-cols-12 gap-16 items-start">
+            <div className="md:col-span-5 relative">
+              <div className="aspect-[4/5] bg-slate-200 dark:bg-slate-800 rounded-2xl overflow-hidden glass-card relative group">
+                {/* Placeholder for potential profile image */}
+                <div className="absolute inset-0 flex items-center justify-center text-slate-400">
+                  <span className="text-9xl opacity-20 font-serif">SM</span>
                 </div>
-                <div className="text-center p-4 bg-purple-50 rounded-lg">
-                  <div className="text-2xl font-bold text-purple-600">4</div>
-                  <div className="text-gray-600">Major Companies</div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
+                  <p className="text-white font-serif italic text-lg">"Innovating for a better tomorrow"</p>
                 </div>
               </div>
+              {/* Decor element */}
+              <div className="absolute -bottom-8 -right-8 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl -z-10" />
             </div>
 
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Core Expertise</h3>
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  'Azure', 'Databricks', 'PySpark', 'Python', 'Machine Learning', 'NLP',
-                  'Knowledge Graphs', 'SQL', 'MLOps', 'CI/CD', 'Product Development', 'Startup Building'
-                ].map((skill) => (
-                  <div
-                    key={skill}
-                    className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-center font-medium hover:bg-blue-100 hover:text-blue-700 transition-colors"
-                  >
-                    {skill}
-                  </div>
-                ))}
+            <div className="md:col-span-7">
+              <h2 className="text-sm font-bold text-blue-600 dark:text-blue-400 tracking-widest uppercase mb-4">About Me</h2>
+              <h3 className="text-4xl font-serif font-bold text-slate-900 dark:text-white mb-8">
+                Bridging the gap between technical complexity and social impact.
+              </h3>
+
+              <div className="space-y-6 text-lg text-slate-600 dark:text-slate-300 font-light leading-relaxed">
+                <p>
+                  With a strong foundation in <span className="text-slate-900 dark:text-white font-medium">Data Engineering and AI</span>, I specialize in building robust, scalable architectures that empower organizations to make data-driven decisions.
+                </p>
+                <p>
+                  My expertise spans across the modern data stack—from <span className="text-slate-900 dark:text-white font-medium">Azure and Databricks</span> to advanced Graph Databases like Neo4j. But beyond the tech, I am driven by a mission: to leverage these powerful tools to solve real-world problems that support and improve society.
+                </p>
+                <p>
+                  Whether it's optimizing healthcare diagnostics or ensuring ethical data governance, I believe in technology as a force for good.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-8 mt-12">
+                <div>
+                  <div className="text-4xl font-bold text-slate-900 dark:text-white mb-1">5+</div>
+                  <div className="text-sm text-slate-500 uppercase tracking-wider">Years Experience</div>
+                </div>
+                <div>
+                  <div className="text-4xl font-bold text-slate-900 dark:text-white mb-1">15+</div>
+                  <div className="text-sm text-slate-500 uppercase tracking-wider">Certifications</div>
+                </div>
               </div>
             </div>
           </div>
@@ -346,81 +329,122 @@ export default function Home() {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="py-20 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Professional Experience</h2>
-            <p className="text-lg text-gray-600">My journey across leading technology companies</p>
+      <section id="experience" className="py-32 bg-slate-50/50 dark:bg-black/20">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+            <div>
+              <h2 className="text-sm font-bold text-blue-600 dark:text-blue-400 tracking-widest uppercase mb-4">Career</h2>
+              <h3 className="text-4xl font-serif font-bold text-slate-900 dark:text-white">Professional Journey</h3>
+            </div>
           </div>
 
-          <div className="space-y-8">
+          <div className="space-y-6">
             {experiences.map((exp, index) => (
-              <div key={index} className="bg-white rounded-xl p-8 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-1">{exp.title}</h3>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-lg font-semibold text-blue-600">{exp.company}</span>
-                      <span className="text-gray-400">•</span>
-                      <span className="text-gray-600">{exp.period}</span>
+              <div
+                key={index}
+                className="glass-card hover:bg-white dark:hover:bg-slate-900 p-8 rounded-xl transition-all duration-300 group border-l-4 border-l-transparent hover:border-l-blue-500"
+              >
+                <div className="grid md:grid-cols-12 gap-6 items-center">
+                  <div className="md:col-span-3 text-slate-500 dark:text-slate-400 font-medium font-mono text-sm">
+                    {exp.period}
+                  </div>
+                  <div className="md:col-span-9">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-2">
+                      <h3 className="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        {exp.company}
+                      </h3>
+                      <span className="text-lg text-slate-700 dark:text-slate-300 font-medium">{exp.title}</span>
                     </div>
+                    <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-light">
+                      {exp.description}
+                    </p>
                   </div>
                 </div>
-                <p className="text-gray-600 leading-relaxed">{exp.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="py-20 bg-white dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Certifications Section */}
+      <section id="certifications" className="py-32 bg-grid-pattern relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white dark:from-slate-950 dark:via-transparent dark:to-slate-950 pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Featured Projects & Products</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300">Building innovative solutions that transform data into scalable products</p>
+            <h2 className="text-sm font-bold text-blue-600 dark:text-blue-400 tracking-widest uppercase mb-4">Expertise</h2>
+            <h3 className="text-4xl font-serif font-bold text-slate-900 dark:text-white mb-4">
+              Certifications & Credentials
+            </h3>
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+              Continuous learning is core to my professional philosophy. Here are some of the specialized certifications I've earned.
+            </p>
           </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {certifications.map((cert, index) => (
+              <div key={index} className="glass-card p-6 rounded-xl card-hover flex flex-col justify-between h-full bg-slate-50/50 dark:bg-slate-900/50">
+                <div>
+                  <div className="flex justify-between items-start mb-4">
+                    <span className="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md">
+                      {cert.issuer}
+                    </span>
+                    {cert.date && <span className="text-xs text-slate-400 font-mono">{cert.date}</span>}
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 leading-tight">
+                    {cert.title}
+                  </h3>
+                  {cert.id && <p className="text-xs text-slate-400 font-mono mb-4">ID: {cert.id}</p>}
+                </div>
+
+                {cert.skills && (
+                  <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+                    {cert.skills.map((skill, i) => (
+                      <span key={i} className="text-xs text-blue-600 dark:text-blue-400 font-medium">
+                        #{skill}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* Projects Section */}
+      <section id="projects" className="py-32">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-sm font-bold text-blue-600 dark:text-blue-400 tracking-widest uppercase mb-4">Portfolio</h2>
+          <h3 className="text-4xl font-serif font-bold text-slate-900 dark:text-white mb-16">Selected Projects</h3>
 
           <div className="grid md:grid-cols-2 gap-8">
             {projects.map((project, index) => (
-              <div key={index} className="card-hover bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 rounded-xl p-8 border border-gray-200 dark:border-gray-600 hover:shadow-xl transition-all duration-300 group">
-                <div className="flex items-start justify-between mb-4">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{project.title}</h3>
-                  <span className="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-sm font-medium rounded-full">
-                    {project.impact}
-                  </span>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">{project.description}</p>
-                
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tech.map((tech, techIndex) => (
-                    <span
-                      key={techIndex}
-                      className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full hover:bg-blue-200 transition-colors"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+              <div key={index} className="group cursor-pointer">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 rounded-2xl h-full hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-blue-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                {/* Action Buttons */}
-                <div className="flex gap-3">
-                  <button className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                    View Details
-                  </button>
-                  {index === 0 && (
-                    <button className="bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
-                      </svg>
-                      Coming Soon
-                    </button>
-                  )}
+                  <div className="flex justify-between items-start mb-6">
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                      {project.title}
+                    </h3>
+                    {project.impact && (
+                      <span className="text-xs font-bold uppercase tracking-wider text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-3 py-1 rounded-full">
+                        {project.impact}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-8 font-light text-lg">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((t, i) => (
+                      <span key={i} className="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-sm rounded-md font-medium">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}
@@ -429,220 +453,59 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gradient-to-br from-blue-600 to-purple-600">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Let's Work Together</h2>
-          <p className="text-xl text-blue-100 mb-12 max-w-3xl mx-auto">
-            I'm always interested in discussing new opportunities, innovative projects, 
-            or simply connecting with fellow data enthusiasts and AI researchers.
+      <section id="contact" className="py-32 bg-slate-50 dark:bg-slate-900/50">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-5xl md:text-6xl font-serif font-bold text-slate-900 dark:text-white mb-8">
+            Let's build something meaningful.
+          </h2>
+          <p className="text-xl text-slate-600 dark:text-slate-300 mb-12 font-light max-w-2xl mx-auto">
+            I'm always open to discussing new opportunities, from technical consulting to full-time roles in AI and Data Engineering.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="text-white font-semibold mb-2">Email</h3>
-              <a href="mailto:sm1043@gmail.com" className="text-blue-100 hover:text-white transition-colors">
-                sm1043@gmail.com
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+            <a
+              href="mailto:sm1043@gmail.com"
+              className="px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30"
+            >
+              Contact Me
+            </a>
+            <div className="flex gap-6">
+              <a
+                href="https://www.linkedin.com/in/srinivas-m-8019ba199/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-600 hover:text-blue-600 dark:text-slate-400 dark:hover:text-white transition-colors flex items-center gap-2"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
+                LinkedIn
+              </a>
+              <a
+                href="https://github.com/Srinivas1043"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors flex items-center gap-2"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" /></svg>
+                GitHub
               </a>
             </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0H8m8 0v2H8V6" />
-                </svg>
-              </div>
-              <h3 className="text-white font-semibold mb-2">LinkedIn</h3>
-              <a href="https://linkedin.com/in/srinivas-muralidharan" className="text-blue-100 hover:text-white transition-colors">
-                /in/srinivas-muralidharan
-              </a>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                </svg>
-              </div>
-              <h3 className="text-white font-semibold mb-2">GitHub</h3>
-              <a href="https://github.com/Srinivas1043" className="text-blue-100 hover:text-white transition-colors">
-                @Srinivas1043
-              </a>
-            </div>
-          </div>
-
-          <div className="inline-flex items-center space-x-2 bg-green-500/20 px-4 py-2 rounded-full">
-            <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="text-green-100">Available for new opportunities</span>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold">SM</span>
-            </div>
-            <span className="text-lg font-bold">Srinivas Muralidharan</span>
+      <footer className="py-8 border-t border-slate-200 dark:border-slate-800">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500 dark:text-slate-400 font-mono">
+          <p>© {new Date().getFullYear()} Srinivas Muralidharan</p>
+          <div className="flex items-center gap-4 mt-2 md:mt-0">
+            <span>Next.js</span>
+            <span>•</span>
+            <span>Tailwind</span>
+            <span>•</span>
+            <span>Vercel</span>
           </div>
-          <p className="text-gray-400 mb-4">
-            Data Engineer & AI Scientist • Transforming data into insights
-          </p>
-          <p className="text-gray-500 text-sm">
-            © 2025 Srinivas Muralidharan. Built with Next.js and ❤️
-          </p>
         </div>
       </footer>
-
-      {/* Floating Action Buttons */}
-      <div className="fixed bottom-6 right-6 flex flex-col gap-4 z-50">
-        {/* Theme Toggle */}
-        <button 
-          onClick={toggleTheme}
-          className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
-          title="Toggle Theme"
-        >
-          {theme === 'dark' ? (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-          ) : (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
-          )}
-        </button>
-
-        {/* Chatbot Toggle */}
-        <button 
-          onClick={() => setIsChatOpen(!isChatOpen)}
-          className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
-          title="Chat with me"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-          </svg>
-        </button>
-      </div>
-
-      {/* Chatbot Modal */}
-      {isChatOpen && (
-        <div className="fixed bottom-24 right-6 w-80 h-96 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-600 flex flex-col z-50 overflow-hidden">
-          {/* Chat Header */}
-          <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 flex justify-between items-center">
-            <div>
-              <h3 className="font-semibold">Chat with Srinivas</h3>
-              <p className="text-xs opacity-90">Ask me anything!</p>
-            </div>
-            <button 
-              onClick={() => setIsChatOpen(false)}
-              className="text-white hover:bg-white/20 rounded-full p-1"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Chat Messages */}
-          <div className="flex-1 p-4 overflow-y-auto bg-gray-50 dark:bg-gray-700">
-            <div className="space-y-3">
-              <div className="bg-blue-500 text-white p-3 rounded-lg rounded-tl-none max-w-[80%]">
-                <p className="text-sm">Hi! I&apos;m Srinivas. Thanks for visiting my portfolio! 👋</p>
-              </div>
-              <div className="bg-blue-500 text-white p-3 rounded-lg rounded-tl-none max-w-[80%]">
-                <p className="text-sm">Feel free to ask me about my experience, projects, or potential collaborations!</p>
-              </div>
-              {chatMessages.map((message, index) => (
-                <div 
-                  key={index} 
-                  className={`p-3 rounded-lg max-w-[80%] ${
-                    message.sender === 'user' 
-                      ? 'bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200 ml-auto rounded-tr-none' 
-                      : 'bg-blue-500 text-white rounded-tl-none'
-                  }`}
-                >
-                  <p className="text-sm">{message.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Chat Input */}
-          <div className="p-4 border-t border-gray-200 dark:border-gray-600">
-            <div className="flex gap-2">
-              <input 
-                type="text" 
-                value={chatInput}
-                onChange={(e) => setChatInput(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                placeholder="Type your message..."
-                className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-500 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-              />
-              <button 
-                onClick={handleSendMessage}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Quick Links Popup */}
-      <div className="fixed top-6 right-6 z-40">
-        <button 
-          onClick={() => setIsQuickLinksOpen(!isQuickLinksOpen)}
-          className="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
-          title="Quick Links"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-          </svg>
-        </button>
-
-        {isQuickLinksOpen && (
-          <div className="absolute top-16 right-0 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-600 p-4 w-64">
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Quick Links</h3>
-            <div className="space-y-2">
-              <a href="mailto:srinivas.muralidharan@example.com" className="flex items-center gap-3 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
-                <div className="bg-red-500 text-white p-2 rounded-lg">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                  </svg>
-                </div>
-                <span className="text-sm text-gray-700 dark:text-gray-300">Email Me</span>
-              </a>
-              <a href="/resume.pdf" className="flex items-center gap-3 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
-                <div className="bg-blue-500 text-white p-2 rounded-lg">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span className="text-sm text-gray-700 dark:text-gray-300">Download Resume</span>
-              </a>
-              <button onClick={() => scrollToSection('contact')} className="flex items-center gap-3 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors w-full">
-                <div className="bg-green-500 text-white p-2 rounded-lg">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span className="text-sm text-gray-700 dark:text-gray-300">Let&apos;s Talk</span>
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
     </div>
   );
 }
